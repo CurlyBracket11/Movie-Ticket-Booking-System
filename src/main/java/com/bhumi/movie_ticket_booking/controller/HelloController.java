@@ -1,13 +1,18 @@
 package com.bhumi.movie_ticket_booking.controller;
 
 import com.bhumi.movie_ticket_booking.dto.MovieRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.bhumi.movie_ticket_booking.entity.Movie;
+import com.bhumi.movie_ticket_booking.service.MovieService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HelloController {
+
+    private final MovieService movieService;
+
+    public HelloController(MovieService movieService) {
+        this.movieService = movieService;
+    }
 
     @GetMapping("/hello")
     public String sayHello() {
@@ -15,7 +20,11 @@ public class HelloController {
     }
 
     @PostMapping("/movies")
-    public String addMovie(@RequestBody MovieRequest movieRequest) {
-        return "Movie added: " + movieRequest.getTitle();
+    public Movie addMovie(@RequestBody MovieRequest movieRequest) {
+
+        Movie movie = new Movie();
+        movie.setTitle(movieRequest.getTitle());
+
+        return movieService.addMovie(movie);
     }
 }

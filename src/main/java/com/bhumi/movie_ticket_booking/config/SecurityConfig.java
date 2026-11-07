@@ -14,7 +14,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/hello", "/movies").permitAll()
+                        .requestMatchers("/hello", "/movies", "/movies/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
